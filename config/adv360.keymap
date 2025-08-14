@@ -10,6 +10,7 @@
 #define KEYPAD     1
 #define FN         2
 #define MOD        3
+#define NAV        4
 
 // See assets/key-positions.md for a visual representation of the key positions
 //
@@ -89,7 +90,7 @@
 			&kp EQUAL  &kp N1       &kp N2       &kp N3       &kp N4         &kp N5  &tog KEYPAD                                                                           &mo MOD  &kp N6 &kp N7         &kp N8       &kp N9       &kp N0           &kp MINUS
 			&kp TAB    &kp Q        &kp W        &kp E        &kp R          &kp T   &none                                                                                 &none    &kp Y  &kp U          &kp I        &kp O        &kp P            &kp BSLH
 			&kp ESC    &hml LCTRL A &hml LALT S  &hml LGUI D  &hml LSHIFT F  &kp G   &none                 &hm LSHIFT ESC  &kp LALT    &kp RCTRL &kp RSHIFT                &none    &kp H  &hmr RSHIFT J  &hmr RGUI K  &hmr RALT L  &hmr RCTRL SEMI  &kp SQT
-			&kp LSHFT  &kp Z        &kp X        &kp C        &kp V          &kp B                                         &kp HOME    &kp PG_UP                                    &kp N  &kp M          &kp COMMA    &kp DOT      &kp FSLH         &kp RSHFT
+			&kp LSHFT  &kp Z        &kp X        &kp C        &kp V          &kp B                                         &mo NAV     &kp PG_UP                                    &kp N  &kp M          &kp COMMA    &kp DOT      &kp FSLH         &kp RSHFT
 			&mo FN     &kp GRAVE    &trans       &kp LEFT     &kp RIGHT                          &kp BSPC  &hm LGUI ESC    &kp LALT    &kp LALT  &hm LGUI ENTER  &kp SPACE                 &kp UP         &kp DOWN     &kp LBKT     &kp RBKT         &mo FN
 			>;
 		};
@@ -124,6 +125,17 @@
 			&studio_unlock  &none         &none         &none         &none         &none         &none               &none  &none    &bt BT_CLR  &none                        &stp STP_BAT  &none  &none       &none       &none  &none  &none
 			&none           &none         &none         &none         &macro_ver    &none                                    &none    &none                                                  &none  &none       &none       &none  &none  &none
 			&none           &none         &none         &none         &none                                    &none  &none  &none    &none       &bl BL_TOG  &rgb_ug RGB_TOG                       &bl BL_INC  &bl BL_DEC  &none  &none  &none
+			>;
+		};
+		
+		nav_layer {
+			display-name = "Nav";
+			bindings = <
+			&trans     &trans        &trans        &trans        &trans        &trans        &trans                                                                &trans  &trans        &trans      &trans      &trans        &trans        &trans
+			&trans     &trans        &trans        &trans        &trans        &trans        &trans                                                                &trans  &trans        &kp PG_DN   &kp PG_UP   &trans        &trans        &trans
+			&trans     &sk LGUI      &sk LALT      &sk LCTRL     &sk LSHFT     &trans        &trans       &trans           &trans    &trans  &trans                &trans  &kp LEFT      &kp DOWN    &kp UP      &kp RIGHT     &trans        &trans
+			&trans     &trans        &trans        &trans        &trans        &trans                                      &trans    &trans                        		   &kp LS(TAB)   &kp TAB     &kp ESC     &trans        &trans        &trans
+			&trans     &trans        &trans        &trans        &trans                              &kp BSPC  &kp ENTER   &trans    &trans  &trans  &trans        		   &trans        &trans      &trans      &trans        &trans
 			>;
 		};
 	};
