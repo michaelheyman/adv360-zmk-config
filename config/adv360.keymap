@@ -133,7 +133,7 @@
 			bindings = <
 			&trans     &trans        &trans        &trans        &trans        &trans        &trans                                                                &trans  &trans        &trans      &trans      &trans        &trans        &trans
 			&trans     &trans        &trans        &trans        &trans        &trans        &trans                                                                &trans  &trans        &kp PG_DN   &kp PG_UP   &trans        &trans        &trans
-			&trans     &sk LGUI      &sk LALT      &sk LCTRL     &sk LSHFT     &trans        &trans       &trans           &trans    &trans  &trans                &trans  &kp LEFT      &kp DOWN    &kp UP      &kp RIGHT     &trans        &trans
+			&trans     &kp LCTRL     &kp LALT      &kp LGUI      &kp LSHFT     &trans        &trans       &trans           &trans    &trans  &trans                &trans  &kp LEFT      &kp DOWN    &kp UP      &kp RIGHT     &trans        &trans
 			&trans     &trans        &trans        &trans        &trans        &trans                                      &trans    &trans                        		   &kp LS(TAB)   &kp TAB     &kp ESC     &trans        &trans        &trans
 			&trans     &trans        &trans        &trans        &trans                              &kp BSPC  &kp ENTER   &trans    &trans  &trans  &trans        		   &trans        &trans      &trans      &trans        &trans
 			>;
