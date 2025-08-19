@@ -27,10 +27,12 @@
 //                  │ 65  66  67 │ 68  69  70 │
 //                  ╰─────────────────────────╯
 
+// Left hand alpha keys to be triggered by homerow right mods
 #define HOMEROW_KEYS_L  15 16 17 18 19 \
 29 30 31 32 33 \
 47 48 49 50 51
 
+// Right hand alpha keys to be triggered by homerow right mods
 #define HOMEROW_KEYS_R  21 22 23 24 25 26 \
 39 40 41 42 43 44 \
 54 55 56 57 58
@@ -131,11 +133,11 @@
 		nav_layer {
 			display-name = "Nav";
 			bindings = <
-			&trans     &trans        &trans        &trans        &trans        &trans        &trans                                                                &trans  &trans        &trans      &trans      &trans        &trans        &trans
-			&trans     &trans        &trans        &trans        &trans        &trans        &trans                                                                &trans  &trans        &kp PG_DN   &kp PG_UP   &trans        &trans        &trans
-			&trans     &kp LCTRL     &kp LALT      &kp LGUI      &kp LSHFT     &trans        &trans       &trans           &trans    &trans  &trans                &trans  &kp LEFT      &kp DOWN    &kp UP      &kp RIGHT     &trans        &trans
-			&trans     &trans        &trans        &trans        &trans        &trans                                      &trans    &trans                        		   &kp LS(TAB)   &kp TAB     &kp ESC     &trans        &trans        &trans
-			&trans     &trans        &trans        &trans        &trans                              &kp BSPC  &kp ENTER   &trans    &trans  &trans  &trans        		   &trans        &trans      &trans      &trans        &trans
+			&trans     &trans        &trans        &trans        &trans        &trans        &trans                                                                &trans  &trans            &trans          &trans      &trans        &trans        &trans
+			&trans     &trans        &trans        &trans        &trans        &trans        &trans                                                                &trans  &trans            &kp PG_DN       &kp PG_UP   &trans        &trans        &trans
+			&trans     &kp LCTRL     &kp LALT      &kp LGUI      &kp LSHFT     &trans        &trans       &trans           &trans    &trans  &trans                &trans  &kp LEFT          &kp DOWN        &kp UP      &kp RIGHT     &trans        &trans
+			&trans     &trans        &trans        &trans        &trans        &trans                                      &trans    &trans                        		   &kp LS(LC(TAB))   &kp LC(TAB)     &kp ESC     &trans        &trans        &trans
+			&trans     &trans        &trans        &trans        &trans                              &kp BSPC  &kp ENTER   &trans    &trans  &trans  &trans        		   &trans            &trans          &trans      &trans        &trans
 			>;
 		};
 	};
