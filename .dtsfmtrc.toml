@@ -1,0 +1,7 @@
+indent_str = "\t" # Optional, used for each indent level when printing.
+# Default is two spaces.
+
+layout = "kinesis:adv360" # Required
+
+warn_on_unhandled_tokens = false # Optional
+# Used to check if an input file contains any tokens not handled by the parser/printer.
