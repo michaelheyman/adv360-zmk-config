@@ -46,6 +46,8 @@
 
 // Readable aliases
 #define MAC_SLEEP LC(LA(LG(S)))
+#define NEXT_TAB LS(LC(TAB))
+#define PREV_TAB LC(TAB)
 
 / {
 	behaviors {
@@ -133,11 +135,11 @@
 		nav_layer {
 			display-name = "Nav";
 			bindings = <
-				&trans   &trans      &trans     &trans     &trans      &trans   &trans                                                              &trans   &trans            &trans        &trans      &trans      &trans   &trans
-				&trans   &trans      &trans     &trans     &trans      &trans   &trans                                                              &trans   &trans            &kp PG_DN     &kp PG_UP   &trans      &trans   &trans
-				&trans   &kp LCTRL   &kp LALT   &kp LGUI   &kp LSHFT   &trans   &trans              &trans      &trans   &trans   &trans            &trans   &kp LEFT          &kp DOWN      &kp UP      &kp RIGHT   &trans   &trans
-				&trans   &trans      &trans     &trans     &trans      &trans                                   &trans   &trans                              &kp LS(LC(TAB))   &kp LC(TAB)   &kp ESC     &trans      &trans   &trans
-				&trans   &trans      &trans     &trans     &trans                        &kp BSPC   &kp ENTER   &trans   &trans   &trans   &trans                              &trans        &trans      &trans      &trans   &trans
+				&trans   &trans      &trans     &trans     &trans         &trans         &trans                                                              &trans   &trans         &trans         &trans      &trans      &trans   &trans
+				&trans   &trans      &trans     &trans     &trans         &trans         &trans                                                              &trans   &trans         &kp PG_DN      &kp PG_UP   &trans      &trans   &trans
+				&trans   &kp LCTRL   &kp LALT   &kp LGUI   &kp LSHFT      &trans         &trans              &trans      &trans   &trans   &trans            &trans   &kp LEFT       &kp DOWN       &kp UP      &kp RIGHT   &trans   &trans
+				&trans   &trans      &trans     &trans     &kp PREV_TAB   &kp NEXT_TAB                                   &trans   &trans                              &kp NEXT_TAB   &kp PREV_TAB   &kp ESC     &trans      &trans   &trans
+				&trans   &trans      &trans     &trans     &trans                                 &kp BSPC   &kp ENTER   &trans   &trans   &trans   &trans                           &trans         &trans      &trans      &trans   &trans
 			>;
 		};
 		mouse_layer {
