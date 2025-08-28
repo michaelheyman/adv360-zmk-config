@@ -44,6 +44,11 @@
 #define TAPPING_TERM_MS 200
 #define QUICK_TAP_MS 175
 
+// Hold-tap and home row mod timing parameters (Timeless)
+#define THRM_REQUIRE_PRIOR_IDLE_MS 150
+#define THRM_TAPPING_TERM_MS 280
+#define THRM_QUICK_TAP_MS 175
+
 // Readable aliases
 #define MAC_SLEEP LC(LA(LG(S)))
 #define NEXT_TAB LS(LC(TAB))
@@ -58,7 +63,7 @@
 			compatible = "zmk,behavior-hold-tap";
 			#binding-cells = <2>;
 			flavor = "tap-preferred";
-			tapping-term-ms = <TAPPING_TERM_MS>;
+			tapping-term-ms = <200>;
 			quick_tap_ms = <QUICK_TAP_MS>;
 			bindings = <&kp>, <&kp>;
 		};
@@ -70,9 +75,9 @@
 			compatible = "zmk,behavior-hold-tap";
 			#binding-cells = <2>;
 			flavor = "tap-preferred";
-			require-prior-idle-ms = <REQUIRE_PRIOR_IDLE_MS>;
-			tapping-term-ms = <TAPPING_TERM_MS>;
-			quick-tap-ms = <QUICK_TAP_MS>;
+			require-prior-idle-ms = <THRM_REQUIRE_PRIOR_IDLE_MS>;
+			tapping-term-ms = <THRM_TAPPING_TERM_MS>;
+			quick-tap-ms = <THRM_QUICK_TAP_MS>;
 			bindings = <&kp>, <&kp>;
 			hold-trigger-key-positions = <HOMEROW_KEYS_R HOMEROW_THUMBS>;
 			hold-trigger-on-release;
@@ -81,9 +86,9 @@
 			compatible = "zmk,behavior-hold-tap";
 			#binding-cells = <2>;
 			flavor = "tap-preferred";
-			require-prior-idle-ms = <REQUIRE_PRIOR_IDLE_MS>;
-			tapping-term-ms = <TAPPING_TERM_MS>;
-			quick-tap-ms = <QUICK_TAP_MS>;
+			require-prior-idle-ms = <THRM_REQUIRE_PRIOR_IDLE_MS>;
+			tapping-term-ms = <THRM_TAPPING_TERM_MS>;
+			quick-tap-ms = <THRM_QUICK_TAP_MS>;
 			bindings = <&kp>, <&kp>;
 			hold-trigger-key-positions = <HOMEROW_KEYS_L HOMEROW_THUMBS>;
 			hold-trigger-on-release;
