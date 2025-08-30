@@ -44,6 +44,13 @@
 #define TAPPING_TERM_MS 200
 #define QUICK_TAP_MS 175
 
+// Set behavior for home row mods (CAGS, GACS, etc.)
+// See https://precondition.github.io/home-row-mods#home-row-mods-order for options
+#define PINKY_FINGER_MOD LCTRL
+#define RINGY_FINGER_MOD LALT
+#define MIDDY_FINGER_MOD LGUI
+#define INDEX_FINGER_MOD LSHIFT
+
 // Hold-tap and home row mod timing parameters (Timeless)
 #define THRM_REQUIRE_PRIOR_IDLE_MS 150
 #define THRM_TAPPING_TERM_MS 280
@@ -100,11 +107,11 @@
 		default_layer {
 			display-name = "Base";
 			bindings = <
-				&kp EQUAL   &kp N1         &kp N2        &kp N3        &kp N4          &kp N5   &tog KEYPAD                                                                                         &mo MOD   &kp N6   &kp N7          &kp N8        &kp N9        &kp N0            &kp MINUS
-				&kp TAB     &kp Q          &kp W         &kp E         &kp R           &kp T    &none                                                                                               &none     &kp Y    &kp U           &kp I         &kp O         &kp P             &kp BSLH
-				&kp ESC     &hml LCTRL A   &hml LALT S   &hml LGUI D   &hml LSHIFT F   &kp G    &none                         &hm LSHIFT ESC   &kp LALT    &kp RCTRL   &kp RSHIFT                   &none     &kp H    &hmr RSHIFT J   &hmr RGUI K   &hmr RALT L   &hmr RCTRL SEMI   &kp SQT
-				&kp LSHFT   &kp Z          &kp X         &kp C         &kp V           &kp B                                                   &mo MOUSE   &kp PG_UP                                          &kp N    &kp M           &kp COMMA     &kp DOT       &kp FSLH          &kp RSHFT
-				&mo FN      &kp GRAVE      &trans        &kp LEFT      &kp RIGHT                              &hm LALT BSPC   &hm LGUI ESC     &mo NAV     &kp LALT    &hm LGUI ENTER   &kp SPACE                      &kp UP          &kp DOWN      &kp LBKT      &kp RBKT          &mo FN
+				&kp EQUAL   &kp N1                    &kp N2                    &kp N3                    &kp N4                    &kp N5   &tog KEYPAD                                                                                         &mo MOD   &kp N6   &kp N7                    &kp N8                    &kp N9                    &kp N0                       &kp MINUS
+				&kp TAB     &kp Q                     &kp W                     &kp E                     &kp R                     &kp T    &none                                                                                               &none     &kp Y    &kp U                     &kp I                     &kp O                     &kp P                        &kp BSLH
+				&kp ESC     &hml PINKY_FINGER_MOD A   &hml RINGY_FINGER_MOD S   &hml MIDDY_FINGER_MOD D   &hml INDEX_FINGER_MOD F   &kp G    &none                         &hm LSHIFT ESC   &kp LALT    &kp RCTRL   &kp RSHIFT                   &none     &kp H    &hmr INDEX_FINGER_MOD J   &hmr MIDDY_FINGER_MOD K   &hmr RINGY_FINGER_MOD L   &hmr PINKY_FINGER_MOD SEMI   &kp SQT
+				&kp LSHFT   &kp Z                     &kp X                     &kp C                     &kp V                     &kp B                                                   &mo MOUSE   &kp PG_UP                                          &kp N    &kp M                     &kp COMMA                 &kp DOT                   &kp FSLH                     &kp RSHFT
+				&mo FN      &kp GRAVE                 &trans                    &kp LEFT                  &kp RIGHT                                        &hm LALT BSPC   &hm LGUI ESC     &mo NAV     &kp LALT    &hm LGUI ENTER   &kp SPACE                      &kp UP                    &kp DOWN                  &kp LBKT                  &kp RBKT                     &mo FN
 			>;
 		};
 		keypad_layer {
@@ -140,21 +147,21 @@
 		nav_layer {
 			display-name = "Nav";
 			bindings = <
-				&trans   &trans      &trans     &trans     &trans         &trans         &trans                                                               &trans   &trans         &trans         &trans      &trans      &trans   &trans
-				&trans   &trans      &trans     &trans     &trans         &trans         &trans                                                               &trans   &trans         &kp PG_DN      &kp PG_UP   &trans      &trans   &trans
-				&trans   &kp LCTRL   &kp LALT   &kp LGUI   &kp LSHFT      &trans         &trans              &trans      &trans   &trans   &trans             &trans   &kp LEFT       &kp DOWN       &kp UP      &kp RIGHT   &trans   &trans
-				&trans   &trans      &trans     &trans     &kp PREV_TAB   &kp NEXT_TAB                                   &trans   &trans                               &kp NEXT_TAB   &kp PREV_TAB   &kp ESC     &trans      &trans   &trans
-				&trans   &trans      &trans     &trans     &trans                                 &kp BSPC   &kp ENTER   &trans   &trans   &kp TAB   &trans                           &trans         &trans      &trans      &trans   &trans
+				&trans   &trans                 &trans                 &trans                 &trans                 &trans         &trans                                                               &trans   &trans         &trans         &trans      &trans      &trans   &trans
+				&trans   &trans                 &trans                 &trans                 &trans                 &trans         &trans                                                               &trans   &trans         &kp PG_DN      &kp PG_UP   &trans      &trans   &trans
+				&trans   &kp PINKY_FINGER_MOD   &kp RINGY_FINGER_MOD   &kp MIDDY_FINGER_MOD   &kp INDEX_FINGER_MOD   &trans         &trans              &trans      &trans   &trans   &trans             &trans   &kp LEFT       &kp DOWN       &kp UP      &kp RIGHT   &trans   &trans
+				&trans   &trans                 &trans                 &trans                 &kp PREV_TAB           &kp NEXT_TAB                                   &trans   &trans                               &kp NEXT_TAB   &kp PREV_TAB   &kp ESC     &trans      &trans   &trans
+				&trans   &trans                 &trans                 &trans                 &trans                                         &kp BSPC   &kp ENTER   &trans   &trans   &kp TAB   &trans                           &trans         &trans      &trans      &trans   &trans
 			>;
 		};
 		mouse_layer {
 			display-name = "Mouse";
 			bindings = <
-				&trans   &trans      &trans     &trans     &trans      &trans   &trans                                                                       &trans   &trans              &trans             &trans              &trans             &trans   &trans
-				&trans   &trans      &trans     &trans     &trans      &trans   &trans                                                                       &trans   &trans              &kp PG_DN          &kp PG_UP           &trans             &trans   &trans
-				&trans   &kp LCTRL   &kp LALT   &kp LGUI   &kp LSHFT   &trans   &trans              &trans      &trans   &trans      &trans                  &trans   &mmv MOVE_LEFT      &mmv MOVE_DOWN     &mmv MOVE_UP        &mmv MOVE_RIGHT    &trans   &trans
-				&trans   &trans      &trans     &trans     &trans      &trans                                   &trans   &trans                                       &mmv MOVE_X(-200)   &mmv MOVE_Y(200)   &mmv MOVE_Y(-200)   &mmv MOVE_X(200)   &trans   &trans
-				&trans   &trans      &trans     &trans     &trans                        &kp BSPC   &kp ENTER   &trans   &mkp MCLK   &mkp LCLK   &mkp RCLK                                &trans             &trans              &trans             &trans   &trans
+				&trans   &trans                 &trans                 &trans                 &trans                 &trans   &trans                                                                       &trans   &trans              &trans             &trans              &trans             &trans   &trans
+				&trans   &trans                 &trans                 &trans                 &trans                 &trans   &trans                                                                       &trans   &trans              &kp PG_DN          &kp PG_UP           &trans             &trans   &trans
+				&trans   &kp PINKY_FINGER_MOD   &kp RINGY_FINGER_MOD   &kp MIDDY_FINGER_MOD   &kp INDEX_FINGER_MOD   &trans   &trans              &trans      &trans   &trans      &trans                  &trans   &mmv MOVE_LEFT      &mmv MOVE_DOWN     &mmv MOVE_UP        &mmv MOVE_RIGHT    &trans   &trans
+				&trans   &trans                 &trans                 &trans                 &trans                 &trans                                   &trans   &trans                                       &mmv MOVE_X(-200)   &mmv MOVE_Y(200)   &mmv MOVE_Y(-200)   &mmv MOVE_X(200)   &trans   &trans
+				&trans   &trans                 &trans                 &trans                 &trans                                   &kp BSPC   &kp ENTER   &trans   &mkp MCLK   &mkp LCLK   &mkp RCLK                                &trans             &trans              &trans             &trans   &trans
 			>;
 		};
 	};
