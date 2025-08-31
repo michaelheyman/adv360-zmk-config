@@ -6,12 +6,12 @@
 #include <dt-bindings/zmk/rgb.h>
 
 // Layers
-#define DEFAULT 0
-#define KEYPAD 1
-#define FN 2
-#define MOD 3
-#define NAV 4
-#define MOUSE 5
+#define LAYER_DEFAULT 0
+#define LAYER_KEYPAD 1
+#define LAYER_FN 2
+#define LAYER_MOD 3
+#define LAYER_NAV 4
+#define LAYER_MOUSE 5
 
 // See assets/key-positions.md for a visual representation of the key positions
 // 
@@ -39,10 +39,10 @@
 #define HOMEROW_THUMBS 52 53 \
 65 66       69 70
 
-// Hold-tap and home row mod timing parameters
+// Timeless Hold-tap and home row mod timing parameters
 #define REQUIRE_PRIOR_IDLE_MS 150
-#define TAPPING_TERM_MS 200
-#define QUICK_TAP_MS 175
+#define TAPPING_TERM_MS 280
+#define QUICK_TAP_MS 150
 
 // Set behavior for home row mods (CAGS, GACS, etc.)
 // See https://precondition.github.io/home-row-mods#home-row-mods-order for options
@@ -50,11 +50,6 @@
 #define RINGY_FINGER_MOD LALT
 #define MIDDY_FINGER_MOD LGUI
 #define INDEX_FINGER_MOD LSHIFT
-
-// Hold-tap and home row mod timing parameters (Timeless)
-#define THRM_REQUIRE_PRIOR_IDLE_MS 150
-#define THRM_TAPPING_TERM_MS 280
-#define THRM_QUICK_TAP_MS 175
 
 // Readable aliases
 #define MAC_SLEEP LC(LA(LG(S)))
@@ -75,16 +70,16 @@
 			bindings = <&kp>, <&kp>;
 		};
 
-		// Adapter from:
+		// Adapted from:
 		// - https://zmk.dev/docs/keymaps/behaviors/hold-tap?examples=home_row_mods#custom-hold-tap-examples
 		// - https://github.com/urob/zmk-config?tab=readme-ov-file#timeless-homerow-mods
 		hml: home_row_mod_left {
 			compatible = "zmk,behavior-hold-tap";
 			#binding-cells = <2>;
 			flavor = "tap-preferred";
-			require-prior-idle-ms = <THRM_REQUIRE_PRIOR_IDLE_MS>;
-			tapping-term-ms = <THRM_TAPPING_TERM_MS>;
-			quick-tap-ms = <THRM_QUICK_TAP_MS>;
+			require-prior-idle-ms = <REQUIRE_PRIOR_IDLE_MS>;
+			tapping-term-ms = <TAPPING_TERM_MS>;
+			quick-tap-ms = <QUICK_TAP_MS>;
 			bindings = <&kp>, <&kp>;
 			hold-trigger-key-positions = <HOMEROW_KEYS_R HOMEROW_THUMBS>;
 			hold-trigger-on-release;
@@ -93,9 +88,9 @@
 			compatible = "zmk,behavior-hold-tap";
 			#binding-cells = <2>;
 			flavor = "tap-preferred";
-			require-prior-idle-ms = <THRM_REQUIRE_PRIOR_IDLE_MS>;
-			tapping-term-ms = <THRM_TAPPING_TERM_MS>;
-			quick-tap-ms = <THRM_QUICK_TAP_MS>;
+			require-prior-idle-ms = <REQUIRE_PRIOR_IDLE_MS>;
+			tapping-term-ms = <TAPPING_TERM_MS>;
+			quick-tap-ms = <QUICK_TAP_MS>;
 			bindings = <&kp>, <&kp>;
 			hold-trigger-key-positions = <HOMEROW_KEYS_L HOMEROW_THUMBS>;
 			hold-trigger-on-release;
@@ -107,31 +102,31 @@
 		default_layer {
 			display-name = "Base";
 			bindings = <
-				&kp EQUAL   &kp N1                    &kp N2                    &kp N3                    &kp N4                    &kp N5   &tog KEYPAD                                                                                         &mo MOD   &kp N6   &kp N7                    &kp N8                    &kp N9                    &kp N0                       &kp MINUS
-				&kp TAB     &kp Q                     &kp W                     &kp E                     &kp R                     &kp T    &none                                                                                               &none     &kp Y    &kp U                     &kp I                     &kp O                     &kp P                        &kp BSLH
-				&kp ESC     &hml PINKY_FINGER_MOD A   &hml RINGY_FINGER_MOD S   &hml MIDDY_FINGER_MOD D   &hml INDEX_FINGER_MOD F   &kp G    &none                         &hm LSHIFT ESC   &kp LALT    &kp RCTRL   &kp RSHIFT                   &none     &kp H    &hmr INDEX_FINGER_MOD J   &hmr MIDDY_FINGER_MOD K   &hmr RINGY_FINGER_MOD L   &hmr PINKY_FINGER_MOD SEMI   &kp SQT
-				&kp LSHFT   &kp Z                     &kp X                     &kp C                     &kp V                     &kp B                                                   &mo MOUSE   &kp PG_UP                                          &kp N    &kp M                     &kp COMMA                 &kp DOT                   &kp FSLH                     &kp RSHFT
-				&mo FN      &kp GRAVE                 &trans                    &kp LEFT                  &kp RIGHT                                        &hm LALT BSPC   &hm LGUI ESC     &mo NAV     &kp LALT    &hm LGUI ENTER   &kp SPACE                      &kp UP                    &kp DOWN                  &kp LBKT                  &kp RBKT                     &mo FN
+				&kp EQUAL      &kp N1                    &kp N2                    &kp N3                    &kp N4                    &kp N5   &tog LAYER_KEYPAD                                                                                               &mo LAYER_MOD   &kp N6   &kp N7                    &kp N8                    &kp N9                    &kp N0                       &kp MINUS
+				&kp TAB        &kp Q                     &kp W                     &kp E                     &kp R                     &kp T    &none                                                                                                           &none           &kp Y    &kp U                     &kp I                     &kp O                     &kp P                        &kp BSLH
+				&kp ESC        &hml PINKY_FINGER_MOD A   &hml RINGY_FINGER_MOD S   &hml MIDDY_FINGER_MOD D   &hml INDEX_FINGER_MOD F   &kp G    &none                               &hm LSHIFT ESC   &kp LALT          &kp RCTRL   &kp RSHIFT                   &none           &kp H    &hmr INDEX_FINGER_MOD J   &hmr MIDDY_FINGER_MOD K   &hmr RINGY_FINGER_MOD L   &hmr PINKY_FINGER_MOD SEMI   &kp SQT
+				&kp LSHFT      &kp Z                     &kp X                     &kp C                     &kp V                     &kp B                                                         &mo LAYER_MOUSE   &kp PG_UP                                                &kp N    &kp M                     &kp COMMA                 &kp DOT                   &kp FSLH                     &kp RSHFT
+				&mo LAYER_FN   &kp GRAVE                 &trans                    &kp LEFT                  &kp RIGHT                                              &hm LALT BSPC   &hm LGUI ESC     &mo LAYER_NAV     &kp LALT    &hm LGUI ENTER   &kp SPACE                            &kp UP                    &kp DOWN                  &kp LBKT                  &kp RBKT                     &mo LAYER_FN
 			>;
 		};
 		keypad_layer {
 			display-name = "Kp";
 			bindings = <
-				&kp EQUAL   &kp N1      &kp N2     &kp N3     &kp N4      &kp N5   &trans                                                                         &mo MOD   &kp N6   &kp KP_NUM   &kp KP_EQUAL   &kp KP_DIVIDE   &kp KP_MULTIPLY   &kp MINUS
-				&kp TAB     &kp Q       &kp W      &kp E      &kp R       &kp T    &none                                                                          &none     &kp Y    &kp KP_N7    &kp KP_N8      &kp KP_N9       &kp KP_MINUS      &kp BSLH
-				&kp ESC     &kp A       &kp S      &kp D      &kp F       &kp G    &none               &kp LCTRL   &kp LALT   &kp LGUI    &kp RCTRL               &none     &kp H    &kp KP_N4    &kp KP_N5      &kp KP_N6       &kp KP_PLUS       &kp SQT
-				&kp LSHFT   &kp Z       &kp X      &kp C      &kp V       &kp B                                    &kp HOME   &kp PG_UP                                     &kp N    &kp KP_N1    &kp KP_N2      &kp KP_N3       &kp KP_ENTER      &kp RSHFT
-				&mo FN      &kp GRAVE   &kp CAPS   &kp LEFT   &kp RIGHT                     &kp BSPC   &kp DEL     &kp END    &kp PG_DN   &kp ENTER   &kp KP_N0                      &kp UP       &kp DOWN       &kp KP_DOT      &kp RBKT          &mo FN
+				&kp EQUAL      &kp N1      &kp N2     &kp N3     &kp N4      &kp N5   &trans                                                                         &mo LAYER_MOD   &kp N6   &kp KP_NUM   &kp KP_EQUAL   &kp KP_DIVIDE   &kp KP_MULTIPLY   &kp MINUS
+				&kp TAB        &kp Q       &kp W      &kp E      &kp R       &kp T    &none                                                                          &none           &kp Y    &kp KP_N7    &kp KP_N8      &kp KP_N9       &kp KP_MINUS      &kp BSLH
+				&kp ESC        &kp A       &kp S      &kp D      &kp F       &kp G    &none               &kp LCTRL   &kp LALT   &kp LGUI    &kp RCTRL               &none           &kp H    &kp KP_N4    &kp KP_N5      &kp KP_N6       &kp KP_PLUS       &kp SQT
+				&kp LSHFT      &kp Z       &kp X      &kp C      &kp V       &kp B                                    &kp HOME   &kp PG_UP                                           &kp N    &kp KP_N1    &kp KP_N2      &kp KP_N3       &kp KP_ENTER      &kp RSHFT
+				&mo LAYER_FN   &kp GRAVE   &kp CAPS   &kp LEFT   &kp RIGHT                     &kp BSPC   &kp DEL     &kp END    &kp PG_DN   &kp ENTER   &kp KP_N0                            &kp UP       &kp DOWN       &kp KP_DOT      &kp RBKT          &mo LAYER_FN
 			>;
 		};
 		fn_layer {
 			display-name = "Fn";
 			bindings = <
-				&kp F1   &kp F2   &kp F3   &kp F4   &kp F5   &kp F6   &tog KEYPAD                                                                          &mo MOD   &kp F7       &kp F8              &kp F9            &kp F10      &kp F11   &kp F12
-				&trans   &trans   &trans   &trans   &trans   &trans   &none                                                                                &none     &trans       &trans              &trans            &trans       &trans    &trans
-				&trans   &trans   &trans   &trans   &trans   &trans   &none                  &trans          &trans   &trans   &trans                      &none     &kp C_PREV   &kp C_VOLUME_DOWN   &kp C_VOLUME_UP   &kp C_NEXT   &trans    &trans
-				&trans   &trans   &trans   &trans   &trans   &trans                                          &trans   &trans                                         &trans       &trans              &trans            &trans       &trans    &trans
-				&trans   &trans   &trans   &trans   &trans                          &trans   &kp MAC_SLEEP   &trans   &trans   &kp C_PLAY_PAUSE   &trans                          &trans              &trans            &trans       &trans    &trans
+				&kp F1   &kp F2   &kp F3   &kp F4   &kp F5   &kp F6   &tog LAYER_KEYPAD                                                                          &mo LAYER_MOD   &kp F7       &kp F8              &kp F9            &kp F10      &kp F11   &kp F12
+				&trans   &trans   &trans   &trans   &trans   &trans   &none                                                                                      &none           &trans       &trans              &trans            &trans       &trans    &trans
+				&trans   &trans   &trans   &trans   &trans   &trans   &none                        &trans          &trans   &trans   &trans                      &none           &kp C_PREV   &kp C_VOLUME_DOWN   &kp C_VOLUME_UP   &kp C_NEXT   &trans    &trans
+				&trans   &trans   &trans   &trans   &trans   &trans                                                &trans   &trans                                               &trans       &trans              &trans            &trans       &trans    &trans
+				&trans   &trans   &trans   &trans   &trans                                &trans   &kp MAC_SLEEP   &trans   &trans   &kp C_PLAY_PAUSE   &trans                                &trans              &trans            &trans       &trans    &trans
 			>;
 		};
 		mod_layer {
