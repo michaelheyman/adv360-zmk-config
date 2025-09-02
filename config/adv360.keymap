@@ -56,6 +56,9 @@
 #define NEXT_TAB LS(LC(TAB))
 #define PREV_TAB LC(TAB)
 
+// See https://zmk.dev/docs/keymaps/behaviors/mouse-emulation#mouse-emulation-defines
+#define MOVE_VAL 1200
+
 / {
 	behaviors {
 		#include "macros.dtsi"
@@ -152,11 +155,11 @@
 		mouse_layer {
 			display-name = "Mouse";
 			bindings = <
-				&trans   &trans                 &trans                 &trans                 &trans                 &trans   &trans                                                                       &trans   &trans              &trans             &trans              &trans             &trans   &trans
-				&trans   &trans                 &trans                 &trans                 &trans                 &trans   &trans                                                                       &trans   &trans              &kp PG_DN          &kp PG_UP           &trans             &trans   &trans
-				&trans   &kp PINKY_FINGER_MOD   &kp RINGY_FINGER_MOD   &kp MIDDY_FINGER_MOD   &kp INDEX_FINGER_MOD   &trans   &trans              &trans      &trans   &trans      &trans                  &trans   &mmv MOVE_LEFT      &mmv MOVE_DOWN     &mmv MOVE_UP        &mmv MOVE_RIGHT    &trans   &trans
-				&trans   &trans                 &trans                 &trans                 &trans                 &trans                                   &trans   &trans                                       &mmv MOVE_X(-200)   &mmv MOVE_Y(200)   &mmv MOVE_Y(-200)   &mmv MOVE_X(200)   &trans   &trans
-				&trans   &trans                 &trans                 &trans                 &trans                                   &kp BSPC   &kp ENTER   &trans   &mkp MCLK   &mkp LCLK   &mkp RCLK                                &trans             &trans              &trans             &trans   &trans
+				&trans   &trans                 &trans                 &trans                 &trans                 &trans   &trans                                                                       &trans   &trans                   &trans                  &trans                   &trans                  &trans   &trans
+				&trans   &trans                 &trans                 &trans                 &trans                 &trans   &trans                                                                       &trans   &trans                   &kp PG_DN               &kp PG_UP                &trans                  &trans   &trans
+				&trans   &kp PINKY_FINGER_MOD   &kp RINGY_FINGER_MOD   &kp MIDDY_FINGER_MOD   &kp INDEX_FINGER_MOD   &trans   &trans              &trans      &trans   &trans      &trans                  &trans   &mmv MOVE_LEFT           &mmv MOVE_DOWN          &mmv MOVE_UP             &mmv MOVE_RIGHT         &trans   &trans
+				&trans   &trans                 &trans                 &trans                 &trans                 &trans                                   &trans   &trans                                       &mmv MOVE_X(-MOVE_VAL)   &mmv MOVE_Y(MOVE_VAL)   &mmv MOVE_Y(-MOVE_VAL)   &mmv MOVE_X(MOVE_VAL)   &trans   &trans
+				&trans   &trans                 &trans                 &trans                 &trans                                   &kp BSPC   &kp ENTER   &trans   &mkp MCLK   &mkp LCLK   &mkp RCLK                                     &trans                  &trans                   &trans                  &trans   &trans
 			>;
 		};
 	};
