@@ -148,7 +148,7 @@
 				&trans   &trans                 &trans                 &trans                 &trans                 &trans         &trans                                                               &trans   &trans         &trans         &trans      &trans      &trans   &trans
 				&trans   &trans                 &trans                 &trans                 &trans                 &trans         &trans                                                               &trans   &trans         &kp PG_DN      &kp PG_UP   &trans      &trans   &trans
 				&trans   &kp PINKY_FINGER_MOD   &kp RINGY_FINGER_MOD   &kp MIDDY_FINGER_MOD   &kp INDEX_FINGER_MOD   &trans         &trans              &trans      &trans   &trans   &trans             &trans   &kp LEFT       &kp DOWN       &kp UP      &kp RIGHT   &trans   &trans
-				&trans   &trans                 &trans                 &trans                 &kp PREV_TAB           &kp NEXT_TAB                                   &trans   &trans                               &kp NEXT_TAB   &kp PREV_TAB   &kp ESC     &trans      &trans   &trans
+				&trans   &trans                 &trans                 &trans                 &kp NEXT_TAB           &kp PREV_TAB                                   &trans   &trans                               &kp NEXT_TAB   &kp PREV_TAB   &kp ESC     &trans      &trans   &trans
 				&trans   &trans                 &trans                 &trans                 &trans                                         &kp BSPC   &kp ENTER   &trans   &trans   &kp TAB   &trans                           &trans         &trans      &trans      &trans   &trans
 			>;
 		};
