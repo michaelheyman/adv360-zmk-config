@@ -102,21 +102,15 @@
 
 		// Magic shift adapted from urob's timeless magic shift implementation:
 		// https://github.com/urob/zmk-config
-		shift_morph: shift_morph {
-    	    compatible = "zmk,behavior-mod-morph";
-    	    label = "SHIFT_MORPH";
-    	    #binding-cells = <0>;
-    	    bindings = <&kp LSHFT>;
-    	};
 		shift_caps_tap_dance: shift_caps_tap_dance {
 			compatible = "zmk,behavior-tap-dance";
 			#binding-cells = <0>;
 			tapping-term-ms = <TAPPING_TERM_MS>;
 
-			// 1 Tap: Momentary shift
+			// 1 Tap: Standard Shift (Momentary)
 			// 2 Taps: Caps Word
 			// 3+ Taps: No-op
-			bindings = <&shift_morph>, <&caps_word>, <&none>;
+			bindings = <&kp LSHFT>, <&caps_word>, <&none>;
 		};
 		magic_shift: magic_shift {
 			compatible = "zmk,behavior-hold-tap";
