@@ -99,6 +99,29 @@
 			hold-trigger-key-positions = <HOMEROW_KEYS_L HOMEROW_THUMBS>;
 			hold-trigger-on-release;
 		};
+
+		// Magic shift adapted from urob's timeless magic shift implementation:
+		// https://github.com/urob/zmk-config
+		shift_caps_tap_dance: shift_caps_tap_dance {
+			compatible = "zmk,behavior-tap-dance";
+			#binding-cells = <0>;
+			tapping-term-ms = <TAPPING_TERM_MS>;
+
+			// 1 Tap: Sticky Shift
+			// 2 Taps: Caps Word
+			// 3+ Taps: No-op
+			bindings = <&sk LSHFT>, <&caps_word>, <&none>;
+		};
+		magic_shift: magic_shift {
+			compatible = "zmk,behavior-hold-tap";
+			#binding-cells = <2>;
+			flavor = "balanced";
+			tapping-term-ms = <TAPPING_TERM_MS>;
+			quick-tap-ms = <QUICK_TAP_MS>;
+
+			// Hold for key, tap for tap dance
+			bindings = <&kp>, <&shift_caps_tap_dance>;
+		};
 	};
 	keymap {
 		compatible = "zmk,keymap";
@@ -106,11 +129,11 @@
 		default_layer {
 			display-name = "Base";
 			bindings = <
-				&kp EQUAL      &kp N1                    &kp N2                    &kp N3                    &kp N4                    &kp N5   &tog LAYER_KEYPAD                                                                                                 &mo LAYER_MOD   &kp N6   &kp N7                    &kp N8                        &kp N9                      &kp N0                       &kp MINUS
-				&kp TAB        &kp Q                     &kp W                     &kp E                     &kp R                     &kp T    &none                                                                                                             &none           &kp Y    &kp U                     &kp I                         &kp O                       &kp P                        &kp BSLH
-				&kp ESC        &kp A                     &kp S                     &kp D                     &kp F                     &kp G    &none                               &kp LSHIFT     &kp LCTRL         &kp RCTRL       &kp RSHIFT                   &none           &kp H    &kp J                     &kp K                         &kp L                       &kp SEMI                     &kp SQT
-				&kp LSHFT      &hml PINKY_FINGER_MOD Z   &hml RINGY_FINGER_MOD X   &hml MIDDY_FINGER_MOD C   &hml INDEX_FINGER_MOD V   &kp B                                                       &mo LAYER_MOUSE   &caps_word                                                   &kp N    &hmr INDEX_FINGER_MOD M   &hmr MIDDY_FINGER_MOD COMMA   &hmr RINGY_FINGER_MOD DOT   &hmr PINKY_FINGER_MOD FSLH   &kp RSHFT
-				&mo LAYER_FN   &kp GRAVE                 &trans                    &trans                    &trans                                                 &hm LALT BSPC   &hm LGUI ESC   &mo LAYER_NAV     &mo LAYER_NAV   &hm LGUI ENTER   &kp SPACE                            &trans                    &trans                        &kp LBKT                    &kp RBKT                     &mo LAYER_FN
+				&kp EQUAL      &kp N1                    &kp N2                    &kp N3                    &kp N4                    &kp N5   &tog LAYER_KEYPAD                                                                                                        &mo LAYER_MOD   &kp N6   &kp N7                    &kp N8                        &kp N9                      &kp N0                       &kp MINUS
+				&kp TAB        &kp Q                     &kp W                     &kp E                     &kp R                     &kp T    &none                                                                                                                    &none           &kp Y    &kp U                     &kp I                         &kp O                       &kp P                        &kp BSLH
+				&kp ESC        &kp A                     &kp S                     &kp D                     &kp F                     &kp G    &none                               &kp LSHIFT     &kp LCTRL         &kp RCTRL              &kp RSHIFT                   &none           &kp H    &kp J                     &kp K                         &kp L                       &kp SEMI                     &kp SQT
+				&kp LSHFT      &hml PINKY_FINGER_MOD Z   &hml RINGY_FINGER_MOD X   &hml MIDDY_FINGER_MOD C   &hml INDEX_FINGER_MOD V   &kp B                                                       &mo LAYER_MOUSE   &magic_shift LSHFT 0                                                &kp N    &hmr INDEX_FINGER_MOD M   &hmr MIDDY_FINGER_MOD COMMA   &hmr RINGY_FINGER_MOD DOT   &hmr PINKY_FINGER_MOD FSLH   &kp RSHFT
+				&mo LAYER_FN   &kp GRAVE                 &trans                    &trans                    &trans                                                 &hm LALT BSPC   &hm LGUI ESC   &mo LAYER_NAV     &mo LAYER_NAV          &hm LGUI ENTER   &kp SPACE                            &trans                    &trans                        &kp LBKT                    &kp RBKT                     &mo LAYER_FN
 			>;
 		};
 		keypad_layer {
