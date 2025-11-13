@@ -43,7 +43,6 @@
 // See https://zmk.dev/docs/keymaps/behaviors/hold-tap#custom-hold-tap-configuration
 #define REQUIRE_PRIOR_IDLE_MS 150
 #define TAPPING_TERM_MS 200
-#define QUICK_TAP_MS 150
 
 // Set behavior for home row mods (CAGS, GACS, etc.)
 // See https://precondition.github.io/home-row-mods#home-row-mods-order for options
@@ -69,8 +68,8 @@
 			compatible = "zmk,behavior-hold-tap";
 			#binding-cells = <2>;
 			flavor = "tap-preferred";
-			tapping-term-ms = <200>;
-			quick_tap_ms = <QUICK_TAP_MS>;
+			require-prior-idle-ms = <REQUIRE_PRIOR_IDLE_MS>;
+			tapping-term-ms = <TAPPING_TERM_MS>;
 			bindings = <&kp>, <&kp>;
 		};
 
@@ -83,7 +82,6 @@
 			flavor = "tap-preferred";
 			require-prior-idle-ms = <REQUIRE_PRIOR_IDLE_MS>;
 			tapping-term-ms = <TAPPING_TERM_MS>;
-			quick-tap-ms = <QUICK_TAP_MS>;
 			bindings = <&kp>, <&kp>;
 			hold-trigger-key-positions = <HOMEROW_KEYS_R HOMEROW_THUMBS>;
 			hold-trigger-on-release;
@@ -94,7 +92,6 @@
 			flavor = "tap-preferred";
 			require-prior-idle-ms = <REQUIRE_PRIOR_IDLE_MS>;
 			tapping-term-ms = <TAPPING_TERM_MS>;
-			quick-tap-ms = <QUICK_TAP_MS>;
 			bindings = <&kp>, <&kp>;
 			hold-trigger-key-positions = <HOMEROW_KEYS_L HOMEROW_THUMBS>;
 			hold-trigger-on-release;
@@ -116,8 +113,8 @@
 			compatible = "zmk,behavior-hold-tap";
 			#binding-cells = <2>;
 			flavor = "balanced";
+			require-prior-idle-ms = <REQUIRE_PRIOR_IDLE_MS>;
 			tapping-term-ms = <TAPPING_TERM_MS>;
-			quick-tap-ms = <QUICK_TAP_MS>;
 
 			// Hold for key, tap for tap dance
 			bindings = <&kp>, <&shift_caps_tap_dance>;
