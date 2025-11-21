@@ -130,11 +130,11 @@
 		fn_layer {
 			display-name = "Fn";
 			bindings = <
-				&kp F1   &kp F2                 &kp F3                 &kp F4                 &kp F5                 &kp F6   &tog LAYER_KEYPAD                                                                   &mo LAYER_MOD   &kp F7       &kp F8              &kp F9            &kp F10      &kp F11         &kp F12
-				&trans   &trans                 &trans                 &trans                 &trans                 &trans   &none                                                                               &none           &trans       &trans              &trans            &trans       &trans          &trans
-				&trans   &kp PINKY_FINGER_MOD   &kp RINGY_FINGER_MOD   &kp MIDDY_FINGER_MOD   &kp INDEX_FINGER_MOD   &trans   &none                        &trans   &trans   &trans   &trans                      &none           &kp C_PREV   &kp C_VOLUME_DOWN   &kp C_VOLUME_UP   &kp C_NEXT   &trans          &trans
-				&trans   &trans                 &trans                 &trans                 &trans                 &trans                                         &trans   &trans                                               &trans       &trans              &trans            &trans       &trans          &trans
-				&trans   &trans                 &trans                 &trans                 &trans                                              &trans   &trans   &trans   &trans   &kp C_PLAY_PAUSE   &trans                                &trans              &trans            &trans       &kp MAC_SLEEP   
+				&kp F1   &kp F2                 &kp F3                 &kp F4                 &kp F5                 &kp F6   &tog LAYER_KEYPAD                                                                   &mo LAYER_MOD   &kp F7       &kp F8              &kp F9            &kp F10      &kp F11   &kp F12
+				&trans   &trans                 &trans                 &trans                 &trans                 &trans   &none                                                                               &none           &trans       &trans              &trans            &trans       &trans    &trans
+				&trans   &kp PINKY_FINGER_MOD   &kp RINGY_FINGER_MOD   &kp MIDDY_FINGER_MOD   &kp INDEX_FINGER_MOD   &trans   &none                        &trans   &trans   &trans   &trans                      &none           &kp C_PREV   &kp C_VOLUME_DOWN   &kp C_VOLUME_UP   &kp C_NEXT   &trans    &trans
+				&trans   &trans                 &trans                 &trans                 &trans                 &trans                                         &trans   &trans                                               &trans       &trans              &trans            &trans       &trans    &trans
+				&trans   &trans                 &trans                 &trans                 &trans                                              &trans   &trans   &trans   &trans   &trans   &kp C_PLAY_PAUSE                                &trans              &trans            &trans       &trans    &kp MAC_SLEEP
 			>;
 		};
 		mod_layer {
