@@ -1,7 +1,15 @@
 on:
+  # Trigger on every commit that include changes to the keymap
   push:
     paths:
       - 'config/**'
+
+  # Trigger on pull requests that include changes to the keymap
+  pull_request:
+    paths:
+      - 'config/**'
+
+  # Support manual trigger of workflow
   workflow_dispatch:
 
 name: Build
