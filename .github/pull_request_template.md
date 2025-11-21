@@ -1,8 +1,7 @@
-## Advantage 360 Pro PR template
+## Changes
 
-### What's changed:
+<!-- Describe the changes introduced by this pull request. -->
 
-### Why has this change been implemented:
+## Testing (Optional)
 
-### What (if any) actions must a user take after this change:
-
+<!-- Describe how this pull request has been tested. -->

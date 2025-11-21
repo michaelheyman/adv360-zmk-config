@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        // This extension is recommended for formatting Device Tree Source files.
+        // It requires the `dtsfmt` tool to be installed.
+        // You can install it via `curl -LSfs https://go.mskelton.dev/dtsfmt/install | sh`.
+        "mskelton.dtsfmt"
+    ]
+}

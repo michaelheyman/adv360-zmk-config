@@ -5,145 +5,166 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/rgb.h>
 
-#define KEYS_LEFT 0 1 2 3 4 5 6 \
-14 15 16 17 18 19 20 \
-28 29 30 31 32 33 34 \
-46 47 48 49 50 51 \
-66 67 68 69 70
-#define KEYS_RIGHT 7 8 9 10 11 12 13 \
-21 22 23 24 25 26 27 \
-39 40 41 42 43 44 45 \
-60 61 62 63 64 65 \
-77 78 79 80 81
-#define THUMBS_LEFT 35 36 54 71 72 73
-#define THUMBS_RIGHT 37 38 57 74 75 76
-#define THUMBS THUMBS_LEFT THUMBS_RIGHT
+// Layers
+#define LAYER_DEFAULT 0
+#define LAYER_KEYPAD 1
+#define LAYER_FN 2
+#define LAYER_MOD 3
+#define LAYER_NAV 4
+#define LAYER_MOUSE 5
+
+// See assets/key-positions.md for a visual representation of the key positions
+// 
+// ..................ADVANTAGE 360 KEY MATRIX
+// ╭────────────────────────────┬────────────────────────────╮
+// │  0   1   2   3   4   5   6 │  7   8   9  10  11  12  13 │
+// │ 14  15  16  17  18  19  20 │ 21  22  23  24  25  26  27 │
+// │ 28  29  30  31  32  33  34 │ 39  40  41  42  43  44  45 │
+// │ 46  47  48  49  50  51 ╭───┴───╮ 54  55  56  57  58  59 │
+// │ 60  61  62  63  64╭────╯       ╰────╮71  72  73  74  75 │
+// ╰───────────────────┼────────┬────────┼───────────────────╯
+// ................╭───╯ 35  36 │ 37  38 ╰───╮
+// ................|         52 │ 53         |
+// ................│ 65  66  67 │ 68  69  70 │
+// ................╰─────────────────────────╯
+// Left hand alpha keys to be triggered by homerow right mods
+#define HOMEROW_KEYS_L 15 16 17 18 19 \
+29 30 31 32 33 \
+47 48 49 50 51
+
+// Right hand alpha keys to be triggered by homerow right mods
+#define HOMEROW_KEYS_R 21 22 23 24 25 26 \
+39 40 41 42 43 44 \
+54 55 56 57 58
+#define HOMEROW_THUMBS 52 53 \
+65 66       69 70
+
+// Timeless Hold-tap and home row mod timing parameters
+// See https://zmk.dev/docs/keymaps/behaviors/hold-tap#custom-hold-tap-configuration
+#define REQUIRE_PRIOR_IDLE_MS 150
+#define TAPPING_TERM_MS 200
+#define QUICK_TAP_MS 150
+
+// Set behavior for home row mods (CAGS, GACS, etc.)
+// See https://precondition.github.io/home-row-mods#home-row-mods-order for options
+#define PINKY_FINGER_MOD LCTRL
+#define RINGY_FINGER_MOD LALT
+#define MIDDY_FINGER_MOD LGUI
+#define INDEX_FINGER_MOD LSHIFT
+
+// Readable aliases
+#define MAC_SLEEP LC(LA(LG(S)))
+#define NEXT_TAB LS(LC(TAB))
+#define PREV_TAB LC(TAB)
+
+// See https://zmk.dev/docs/keymaps/behaviors/mouse-emulation#mouse-emulation-defines
+#define MOVE_VAL 1200
 
 / {
 	behaviors {
 		#include "macros.dtsi"
 		#include "version.dtsi"
-		
-		hm: homerow_mods {
+
+		tht: thumb_hold_tap {
 			compatible = "zmk,behavior-hold-tap";
-			label = "HOMEROW_MODS";
 			#binding-cells = <2>;
-			tapping-term-ms = <200>;
-			quick_tap_ms = <175>;
 			flavor = "tap-preferred";
+			tapping-term-ms = <TAPPING_TERM_MS>;
+			quick_tap_ms = <QUICK_TAP_MS>;
 			bindings = <&kp>, <&kp>;
 		};
-		
-		hm_l: homerow_mods_left {
+
+		// Adapted from:
+		// - https://zmk.dev/docs/keymaps/behaviors/hold-tap?examples=home_row_mods#custom-hold-tap-examples
+		// - https://github.com/urob/zmk-config?tab=readme-ov-file#timeless-homerow-mods
+		hml: home_row_mod_left {
 			compatible = "zmk,behavior-hold-tap";
-			label = "HOMEROW_MODS_LEFT";
 			#binding-cells = <2>;
-			tapping-term-ms = <200>;
-			quick_tap_ms = <175>;
-			flavor = "balanced";
+			flavor = "tap-preferred";
+			require-prior-idle-ms = <REQUIRE_PRIOR_IDLE_MS>;
+			tapping-term-ms = <TAPPING_TERM_MS>;
 			bindings = <&kp>, <&kp>;
-			
-			hold-trigger-key-positions = <KEYS_RIGHT THUMBS>;
+			hold-trigger-key-positions = <HOMEROW_KEYS_R HOMEROW_THUMBS>;
+			hold-trigger-on-release;
 		};
-		
-		hm_r: homerow_mods_right {
+		hmr: home_row_mod_right {
 			compatible = "zmk,behavior-hold-tap";
-			label = "HOMEROW_MODS_RIGHT";
 			#binding-cells = <2>;
-			tapping-term-ms = <200>;
-			quick_tap_ms = <175>;
-			flavor = "balanced";
+			flavor = "tap-preferred";
+			require-prior-idle-ms = <REQUIRE_PRIOR_IDLE_MS>;
+			tapping-term-ms = <TAPPING_TERM_MS>;
 			bindings = <&kp>, <&kp>;
-			
-			hold-trigger-key-positions = <KEYS_LEFT THUMBS>;
+			hold-trigger-key-positions = <HOMEROW_KEYS_L HOMEROW_THUMBS>;
+			hold-trigger-on-release;
+		};
+		magic_shift: magic_shift {
+			compatible = "zmk,behavior-tap-dance";
+			#binding-cells = <0>;
+			tapping-term-ms = <TAPPING_TERM_MS>;
+			bindings = <&kp LSHFT>, <&caps_word>;
 		};
 	};
-	
 	keymap {
 		compatible = "zmk,keymap";
-		
+
 		default_layer {
 			display-name = "Base";
 			bindings = <
-			&kp EQUAL  &kp N1     &kp N2  &kp N3    &kp N4     &kp N5  &tog 1                                                                                             &mo 3  &kp N6  &kp N7  &kp N8     &kp N9    &kp N0    &kp MINUS
-			&kp TAB    &kp Q      &kp W   &kp E     &kp R      &kp T   &tog 4                                                                                              &none  &kp Y   &kp U   &kp I      &kp O     &kp P     &kp BSLH
-			&kp ESC    &kp A      &kp S   &kp D     &kp F      &kp G   &none             &hm LEFT_SHIFT ESC  &kp LALT        &kp RCTRL     &kp RIGHT_SHIFT                &none  &kp H   &kp J   &kp K      &kp L     &kp SEMI  &kp SQT
-			&kp LSHFT  &kp Z      &kp X   &kp C     &kp V      &kp B                                         &kp HOME        &kp PG_UP                                           &kp N   &kp M   &kp COMMA  &kp DOT   &kp FSLH  &kp RSHFT
-			&mo 2      &kp GRAVE  &trans  &kp LEFT  &kp RIGHT                  &kp BSPC  &kp DEL             &kp LEFT_ALT    &kp LEFT_ALT  &hm LEFT_GUI ENTER  &kp SPACE                 &kp UP  &kp DOWN   &kp LBKT  &kp RBKT  &mo 2
+				&kp EQUAL      &kp N1                    &kp N2                    &kp N3                    &kp N4                    &kp N5   &tog LAYER_KEYPAD                                                                                                      &mo LAYER_MOD   &kp N6   &kp N7                    &kp N8                        &kp N9                      &kp N0                       &kp MINUS
+				&kp TAB        &kp Q                     &kp W                     &kp E                     &kp R                     &kp T    &none                                                                                                                  &none           &kp Y    &kp U                     &kp I                         &kp O                       &kp P                        &kp BSLH
+				&kp ESC        &hml PINKY_FINGER_MOD A   &hml RINGY_FINGER_MOD S   &hml MIDDY_FINGER_MOD D   &hml INDEX_FINGER_MOD F   &kp G    &none                                &kp LSHIFT      &kp LCTRL         &kp RCTRL         &magic_shift                  &none           &kp H    &kp J                     &kp K                         &kp L                       &kp SEMI                     &kp SQT
+				&kp LSHFT      &kp Z                     &kp X                     &kp C                     &kp V                     &kp B                                                         &mo LAYER_MOUSE   &mo LAYER_MOUSE                                                 &kp N    &hmr INDEX_FINGER_MOD M   &hmr MIDDY_FINGER_MOD COMMA   &hmr RINGY_FINGER_MOD DOT   &hmr PINKY_FINGER_MOD FSLH   &kp RSHFT
+				&mo LAYER_FN   &kp GRAVE                 &trans                    &trans                    &trans                                                 &tht LALT BSPC   &tht LGUI ESC   &mo LAYER_NAV     &mo LAYER_NAV     &tht LGUI ENTER   &kp SPACE                            &trans                    &trans                        &kp LBKT                    &kp RBKT                     &mo LAYER_FN
 			>;
 		};
-		
-		keypad {
+		keypad_layer {
 			display-name = "Kp";
 			bindings = <
-			&kp EQUAL  &kp N1     &kp N2    &kp N3    &kp N4     &kp N5  &trans                                                                    &mo 3  &kp N6  &kp KP_NUM  &kp KP_EQUAL  &kp KP_DIVIDE  &kp KP_MULTIPLY  &kp MINUS
-			&kp TAB    &kp Q      &kp W     &kp E     &kp R      &kp T   &none                                                                     &none  &kp Y   &kp KP_N7   &kp KP_N8     &kp KP_N9      &kp KP_MINUS     &kp BSLH
-			&kp ESC    &kp A      &kp S     &kp D     &kp F      &kp G   &none             &kp LCTRL  &kp LALT    &kp LGUI   &kp RCTRL             &none  &kp H   &kp KP_N4   &kp KP_N5     &kp KP_N6      &kp KP_PLUS      &kp SQT
-			&kp LSHFT  &kp Z      &kp X     &kp C     &kp V      &kp B                                &kp HOME    &kp PG_UP                               &kp N   &kp KP_N1   &kp KP_N2     &kp KP_N3      &kp KP_ENTER     &kp RSHFT
-			&mo 2      &kp GRAVE  &kp CAPS  &kp LEFT  &kp RIGHT                  &kp BSPC  &kp DEL    &kp END     &kp PG_DN  &kp ENTER  &kp KP_N0                 &kp UP      &kp DOWN      &kp KP_DOT     &kp RBKT         &mo 2
+				&kp EQUAL      &kp N1      &kp N2     &kp N3     &kp N4      &kp N5   &trans                                                                         &mo LAYER_MOD   &kp N6   &kp KP_NUM   &kp KP_EQUAL   &kp KP_DIVIDE   &kp KP_MULTIPLY   &kp MINUS
+				&kp TAB        &kp Q       &kp W      &kp E      &kp R       &kp T    &none                                                                          &none           &kp Y    &kp KP_N7    &kp KP_N8      &kp KP_N9       &kp KP_MINUS      &kp BSLH
+				&kp ESC        &kp A       &kp S      &kp D      &kp F       &kp G    &none               &kp LCTRL   &kp LALT   &kp LGUI    &kp RCTRL               &none           &kp H    &kp KP_N4    &kp KP_N5      &kp KP_N6       &kp KP_PLUS       &kp SQT
+				&kp LSHFT      &kp Z       &kp X      &kp C      &kp V       &kp B                                    &kp HOME   &kp PG_UP                                           &kp N    &kp KP_N1    &kp KP_N2      &kp KP_N3       &kp KP_ENTER      &kp RSHFT
+				&mo LAYER_FN   &kp GRAVE   &kp CAPS   &kp LEFT   &kp RIGHT                     &kp BSPC   &kp DEL     &kp END    &kp PG_DN   &kp ENTER   &kp KP_N0                            &kp UP       &kp DOWN       &kp KP_DOT      &kp RBKT          &mo LAYER_FN
 			>;
 		};
-		
-		fn {
+		fn_layer {
 			display-name = "Fn";
 			bindings = <
-			&kp F1  &kp F2  &kp F3            &kp F4          &kp F5      &kp F6  &tog 1                                                          &mo 3  &kp F7  &kp F8           &kp F9                 &kp F10  &kp F11  &kp F12
-			&trans  &trans  &trans            &trans          &trans      &trans  &none                                                           &none  &trans  &trans           &trans                 &trans   &trans   &trans
-			&trans  &trans  &trans            &trans          &trans      &trans  &none           &trans        &trans    &trans  &trans          &none  &trans  &trans           &trans                 &trans   &trans   &trans
-			&trans  &trans  &trans            &trans          &trans      &trans                                &trans    &trans                         &trans  &trans           &trans                 &trans   &trans   &trans
-			&trans  &trans  &kp C_PLAY_PAUSE  &kp C_PREVIOUS  &kp C_NEXT                  &trans  &trans &trans    &trans  &trans  &trans                 &kp C_VOLUME_UP  &kp LG(C_VOLUME_DOWN)  &trans   &trans   &trans
+				&kp F1   &kp F2                 &kp F3                 &kp F4                 &kp F5                 &kp F6   &tog LAYER_KEYPAD                                                                   &mo LAYER_MOD   &kp F7       &kp F8              &kp F9            &kp F10      &kp F11   &kp F12
+				&trans   &trans                 &trans                 &trans                 &trans                 &trans   &none                                                                               &none           &trans       &trans              &trans            &trans       &trans    &trans
+				&trans   &kp PINKY_FINGER_MOD   &kp RINGY_FINGER_MOD   &kp MIDDY_FINGER_MOD   &kp INDEX_FINGER_MOD   &trans   &none                        &trans   &trans   &trans   &trans                      &none           &kp C_PREV   &kp C_VOLUME_DOWN   &kp C_VOLUME_UP   &kp C_NEXT   &trans    &trans
+				&trans   &trans                 &trans                 &trans                 &trans                 &trans                                         &trans   &trans                                               &trans       &trans              &trans            &trans       &trans    &trans
+				&trans   &trans                 &trans                 &trans                 &trans                                              &trans   &trans   &trans   &trans   &trans   &kp C_PLAY_PAUSE                                &trans              &trans            &trans       &trans    &kp MAC_SLEEP
 			>;
 		};
-		
-		mod {
+		mod_layer {
 			display-name = "Mod";
 			bindings = <
-			&none           &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &none                                                                        &trans        &none  &none       &none       &none  &none  &none
-			&none           &none         &none         &none         &none         &none         &bootloader                                                                  &bootloader   &none  &none       &none       &none  &none  &none
-			&studio_unlock  &none         &none         &none         &none         &none         &none               &none  &none    &bt BT_CLR  &none                        &stp STP_BAT  &none  &none       &none       &none  &none  &none
-			&none           &none         &none         &none         &macro_ver    &none                                    &none    &none                                                  &none  &none       &none       &none  &none  &none
-			&none           &none         &none         &none         &none                                    &none  &none  &none    &none       &bl BL_TOG  &rgb_ug RGB_TOG                       &bl BL_INC  &bl BL_DEC  &none  &none  &none
+				&none            &bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2   &bt BT_SEL 3   &bt BT_SEL 4   &none                                                                             &trans         &none   &none        &none        &none   &none   &none
+				&none            &none          &none          &none          &none          &none          &bootloader                                                                       &bootloader    &none   &none        &none        &none   &none   &none
+				&studio_unlock   &none          &none          &none          &none          &none          &none                 &none   &none   &bt BT_CLR   &none                          &stp STP_BAT   &none   &none        &none        &none   &none   &none
+				&none            &none          &none          &none          &macro_ver     &none                                        &none   &none                                                      &none   &none        &none        &none   &none   &none
+				&none            &none          &none          &none          &none                                       &none   &none   &none   &none        &bl BL_TOG   &rgb_ug RGB_TOG                          &bl BL_INC   &bl BL_DEC   &none   &none   &none
 			>;
 		};
-		
-		test_layer {
-			display-name = "Test";
+		nav_layer {
+			display-name = "Nav";
 			bindings = <
-			&kp EQUAL  &kp N1         &kp N2            &kp N3            &kp N4              &kp N5  &tog 1                                                                                             &mo 3  &kp N6               &kp N7             &kp N8            &kp N9         &kp N0    &kp MINUS
-			&kp TAB    &kp Q          &kp W             &kp E             &kp R               &kp T   &tog 4                                                                                              &none  &kp Y                &kp U              &kp I             &kp O          &kp P     &kp BSLH
-			&kp ESC    &hm_l LCTRL A  &hm_l LEFT_ALT S  &hm_l LEFT_GUI D  &hm_l LEFT_SHIFT F  &kp G   &to 0             &hm LEFT_SHIFT ESC  &kp LALT        &kp RCTRL     &kp RIGHT_SHIFT                &none  &hm_r RIGHT_SHIFT H  &hm_r RIGHT_GUI J  &hm_r LEFT_ALT K  &hm_r RCTRL L  &kp SEMI  &kp SQT
-			&kp LSHFT  &kp Z          &kp X             &kp C             &kp V               &kp B                                         &kp HOME        &kp PG_UP                                           &kp N                &kp M              &kp COMMA         &kp DOT        &kp FSLH  &kp RSHFT
-			&mo 2      &kp GRAVE      &trans            &kp LEFT          &kp RIGHT                           &kp BSPC  &kp DEL             &kp LEFT_ALT    &kp LEFT_ALT  &hm LEFT_GUI ENTER  &kp SPACE                              &kp UP             &kp DOWN          &kp LBKT       &kp RBKT  &mo 2
+				&trans   &trans                 &trans                 &trans                 &trans                 &trans         &trans                                                               &trans   &trans         &trans         &trans      &trans      &trans   &trans
+				&trans   &trans                 &trans                 &trans                 &trans                 &trans         &trans                                                               &trans   &trans         &kp PG_DN      &kp PG_UP   &trans      &trans   &trans
+				&trans   &kp PINKY_FINGER_MOD   &kp RINGY_FINGER_MOD   &kp MIDDY_FINGER_MOD   &kp INDEX_FINGER_MOD   &trans         &trans              &trans      &trans   &trans   &trans             &trans   &kp LEFT       &kp DOWN       &kp UP      &kp RIGHT   &trans   &trans
+				&trans   &trans                 &trans                 &trans                 &kp NEXT_TAB           &kp PREV_TAB                                   &trans   &trans                               &kp NEXT_TAB   &kp PREV_TAB   &kp ESC     &trans      &trans   &trans
+				&trans   &trans                 &trans                 &trans                 &trans                                         &kp BSPC   &kp ENTER   &trans   &trans   &kp TAB   &trans                           &trans         &trans      &trans      &trans   &trans
 			>;
 		};
-		
-		extra1 {
-			display-name = "Red";
-			status = "reserved";
-		};
-		
-		extra2 {
-			display-name = "Purple";
-			status = "reserved";
-		};
-		
-		extra3 {
-			display-name = "Cyan";
-			status = "reserved";
-		};
-		
-		extra4 {
-			display-name = "Yellow";
-			status = "reserved";
-		};
-		
-		layer_8 {
+		mouse_layer {
+			display-name = "Mouse";
 			bindings = <
-			&trans  &trans  &trans  &trans  &trans  &trans  &trans                                                    &trans  &trans  &trans  &trans  &trans  &trans  &trans
-			&trans  &trans  &trans  &trans  &trans  &trans  &trans                                                    &trans  &trans  &trans  &trans  &trans  &trans  &trans
-			&trans  &trans  &trans  &trans  &trans  &trans  &trans          &trans  &trans    &trans  &trans          &trans  &trans  &trans  &trans  &trans  &trans  &trans
-			&trans  &trans  &trans  &trans  &trans  &trans                          &trans    &trans                          &trans  &trans  &trans  &trans  &trans  &trans
-			&trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans    &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans
+				&trans   &trans                 &trans                 &trans                 &trans                 &trans   &trans                                                                       &trans   &trans                   &trans                  &trans                   &trans                  &trans   &trans
+				&trans   &trans                 &trans                 &trans                 &trans                 &trans   &trans                                                                       &trans   &trans                   &kp PG_DN               &kp PG_UP                &trans                  &trans   &trans
+				&trans   &kp PINKY_FINGER_MOD   &kp RINGY_FINGER_MOD   &kp MIDDY_FINGER_MOD   &kp INDEX_FINGER_MOD   &trans   &trans              &trans      &trans   &trans      &trans                  &trans   &mmv MOVE_X(-MOVE_VAL)   &mmv MOVE_Y(MOVE_VAL)   &mmv MOVE_Y(-MOVE_VAL)   &mmv MOVE_X(MOVE_VAL)   &trans   &trans
+				&trans   &trans                 &trans                 &trans                 &trans                 &trans                                   &trans   &trans                                       &mmv MOVE_LEFT           &mmv MOVE_DOWN          &mmv MOVE_UP             &mmv MOVE_RIGHT         &trans   &trans
+				&trans   &trans                 &trans                 &trans                 &trans                                   &kp BSPC   &kp ENTER   &trans   &mkp MCLK   &mkp LCLK   &mkp RCLK                                     &trans                  &trans                   &trans                  &trans   &trans
 			>;
 		};
 	};

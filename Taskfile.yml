@@ -1,0 +1,64 @@
+version: "3"
+
+vars:
+  KEYMAP_FILE: config/adv360.keymap
+
+tasks:
+  default:
+    desc: default task
+    cmds:
+      - task --list
+
+  lint:
+    desc: lint files
+    cmds:
+      - task: lint:devicetree
+      - task: lint:markdown
+
+  lint:devicetree:
+    desc: lint devicetree files
+    preconditions:
+      - sh: which dtsfmt
+        msg: "dtsfmt is not installed. Please install dtsfmt from https://github.com/mskelton/dtsfmt"
+    cmds:
+      - dtsfmt --check {{.KEYMAP_FILE}}
+
+  lint:markdown:
+    desc: link markdown files
+    preconditions:
+      - sh: which npx
+        msg: "npx is not installed. Please install Node.js from https://nodejs.org/"
+    cmds:
+      - npx --yes markdownlint-cli2 ./README.md  
+
+  fmt:
+    desc: format files
+    cmds:
+      - task: fmt:devicetree
+      - task: fmt:markdown
+
+  fmt:devicetree:
+    desc: fmt devicetree files
+    preconditions:
+      - sh: which dtsfmt
+        msg: "dtsfmt is not installed. Please install dtsfmt from https://github.com/mskelton/dtsfmt"
+    cmds:
+      - dtsfmt {{.KEYMAP_FILE}}
+
+  fmt:markdown:
+    desc: fmt markdown files
+    preconditions:
+      - sh: which npx
+        msg: "npx is not installed. Please install Node.js from https://nodejs.org/"
+    cmds:
+      - npx --yes doctoc --github README.md  
+
+  build-keymap:
+    desc: build keymap file
+    vars:
+      OUTPUT_SVG: assets/keymap.svg
+    preconditions:
+      - sh: which pipx
+        msg: "pipx is not installed. Please install pipx from https://github.com/pypa/pipx"
+    cmds:
+      - pipx run keymap-drawer parse --zmk-keymap {{.KEYMAP_FILE}} > keymap.yml && pipx run keymap-drawer draw keymap.yml -o {{.OUTPUT_SVG}} && rm keymap.yml
