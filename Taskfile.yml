@@ -1,0 +1,46 @@
+version: "3"
+
+vars:
+  KEYMAP_FILE: config/adv360.keymap
+
+tasks:
+  default:
+    desc: default task
+    cmds:
+      - task --list
+
+  lint:
+    desc: lint files
+    cmds:
+      - task: lint:devicetree
+
+  lint:devicetree:
+    desc: lint devicetree files
+    preconditions:
+      - sh: which dtsfmt
+        msg: "dtsfmt is not installed. Please install dtsfmt from https://github.com/mskelton/dtsfmt"
+    cmds:
+      - dtsfmt --check {{.KEYMAP_FILE}}
+
+  fmt:
+    desc: format files
+    cmds:
+      - task: fmt:devicetree
+
+  fmt:devicetree:
+    desc: fmt devicetree files
+    preconditions:
+      - sh: which dtsfmt
+        msg: "dtsfmt is not installed. Please install dtsfmt from https://github.com/mskelton/dtsfmt"
+    cmds:
+      - dtsfmt {{.KEYMAP_FILE}}
+
+  build-keymap:
+    desc: build keymap file
+    vars:
+      OUTPUT_SVG: assets/keymap.svg
+    preconditions:
+      - sh: which pipx
+        msg: "pipx is not installed. Please install pipx from https://github.com/pypa/pipx"
+    cmds:
+      - pipx run keymap-drawer parse --zmk-keymap {{.KEYMAP_FILE}} > keymap.yml && pipx run keymap-drawer draw keymap.yml -o {{.OUTPUT_SVG}} && rm keymap.yml
