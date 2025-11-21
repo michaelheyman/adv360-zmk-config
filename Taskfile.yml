@@ -13,6 +13,7 @@ tasks:
     desc: lint files
     cmds:
       - task: lint:devicetree
+      - task: lint:markdown
 
   lint:devicetree:
     desc: lint devicetree files
@@ -22,10 +23,19 @@ tasks:
     cmds:
       - dtsfmt --check {{.KEYMAP_FILE}}
 
+  lint:markdown:
+    desc: link markdown files
+    preconditions:
+      - sh: which npx
+        msg: "npx is not installed. Please install Node.js from https://nodejs.org/"
+    cmds:
+      - npx --yes markdownlint-cli2 ./README.md  
+
   fmt:
     desc: format files
     cmds:
       - task: fmt:devicetree
+      - task: fmt:markdown
 
   fmt:devicetree:
     desc: fmt devicetree files
@@ -34,6 +44,14 @@ tasks:
         msg: "dtsfmt is not installed. Please install dtsfmt from https://github.com/mskelton/dtsfmt"
     cmds:
       - dtsfmt {{.KEYMAP_FILE}}
+
+  fmt:markdown:
+    desc: fmt markdown files
+    preconditions:
+      - sh: which npx
+        msg: "npx is not installed. Please install Node.js from https://nodejs.org/"
+    cmds:
+      - npx --yes doctoc --github README.md  
 
   build-keymap:
     desc: build keymap file
