@@ -52,7 +52,7 @@ image and text format in the [key positions](assets/key-positions.md) file.
 ##### Software
 
 - Either Podman or Docker is required, Podman is chosen if both are installed.
-- Make is also required
+- Task is also required
 
 ##### macOS specific
 
@@ -75,16 +75,17 @@ the container being used.
 
 ##### Building the firmware
 
-1. Execute `make` to build firmware for both halves or `make left` to only build firmware for the left hand side.
+1. Execute `task build` to build firmware for both halves or `task build:left` to only build firmware for the left hand
+side.
 2. Check the `firmware` directory for the latest firmware build. The first part of the filename is the timestamp when
 the firmware was built.
 
 ##### Cleanup
 
-The built docker container and compiled firmware files can be deleted with `make clean`.
+The built docker container and compiled firmware files can be deleted with `task clean`.
 
-Creating the docker container takes some time. Therefore `make clean_firmware` can be used to only clean firmware
-without removing the docker container. Similarly `make clean_image` can be used to remove the docker container without
+Creating the docker container takes some time. Therefore `task clean:firmware` can be used to only clean firmware
+without removing the docker container. Similarly `task clean:image` can be used to remove the docker container without
 removing compiled firmware files.
 
 ## Flashing Firmware

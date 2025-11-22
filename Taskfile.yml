@@ -52,3 +52,73 @@ tasks:
         msg: "pipx is not installed. Please install pipx from https://github.com/pypa/pipx"
     cmds:
       - pipx run keymap-drawer parse --zmk-keymap {{.KEYMAP_FILE}} > keymap.yml && pipx run keymap-drawer draw keymap.yml -o {{.OUTPUT_SVG}} && rm keymap.yml
+
+  build:
+    desc: build both left and right firmware with Docker
+    vars:
+      DOCKER:
+        sh: command -v podman || command -v docker
+      TIMESTAMP:
+        sh: date -u +"%Y%m%d%H%M"
+      COMMIT:
+        sh: git rev-parse --short HEAD 2>/dev/null || echo "unknown"
+    preconditions:
+      - sh: '[ -n "{{.DOCKER}}" ]'
+        msg: "Docker or Podman is not installed"
+    cmds:
+      - bin/get_version_local.sh clique >> /dev/null
+      - "{{.DOCKER}} build --tag zmk --file Dockerfile ."
+      - |
+        {{.DOCKER}} run --rm -it --name zmk \
+          -v {{.PWD}}/firmware:/app/firmware \
+          -v {{.PWD}}/config:/app/config:ro \
+          -e TIMESTAMP={{.TIMESTAMP}} \
+          -e COMMIT={{.COMMIT}} \
+          -e BUILD_RIGHT=true zmk
+      - git checkout config/version.dtsi
+
+  build:left:
+    desc: build left firmware with Docker
+    vars:
+      DOCKER:
+        sh: command -v podman || command -v docker
+      TIMESTAMP:
+        sh: date -u +"%Y%m%d%H%M"
+      COMMIT:
+        sh: git rev-parse --short HEAD 2>/dev/null || echo "unknown"
+    preconditions:
+      - sh: '[ -n "{{.DOCKER}}" ]'
+        msg: "Docker or Podman is not installed"
+    cmds:
+      - bin/get_version_local.sh clique >> /dev/null
+      - "{{.DOCKER}} build --tag zmk --file Dockerfile ."
+      - |
+        {{.DOCKER}} run --rm -it --name zmk \
+          -v {{.PWD}}/firmware:/app/firmware \
+          -v {{.PWD}}/config:/app/config:ro \
+          -e TIMESTAMP={{.TIMESTAMP}} \
+          -e COMMIT={{.COMMIT}} \
+          -e BUILD_RIGHT=false zmk
+      - git checkout config/version.dtsi
+
+  clean:firmware:
+    desc: remove firmware artifacts
+    cmds:
+      - rm -f firmware/*.uf2
+
+  clean:image:
+    desc: remove zmk Docker image
+    vars:
+      DOCKER:
+        sh: command -v podman || command -v docker
+    preconditions:
+      - sh: '[ -n "{{.DOCKER}}" ]'
+        msg: "Docker or Podman is not installed"
+    cmds:
+      - "{{.DOCKER}} image rm zmk docker.io/zmkfirmware/zmk-build-arm:stable || true"
+
+  clean:
+    desc: clean all artifacts and images
+    cmds:
+      - task: clean:firmware
+      - task: clean:image
