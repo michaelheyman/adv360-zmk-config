@@ -1,0 +1,4 @@
+# Enable experimental features
+experiments:
+  # Remote Taskfiles experiment: https://taskfile.dev/docs/experiments/remote-taskfiles
+  REMOTE_TASKFILES: 1
