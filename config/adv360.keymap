@@ -97,11 +97,22 @@
 			hold-trigger-key-positions = <HOMEROW_KEYS_L HOMEROW_THUMBS>;
 			hold-trigger-on-release;
 		};
+		shift_caps: shift_caps {
+			compatible = "zmk,behavior-hold-tap";
+			#binding-cells = <2>;
+			flavor = "balanced";
+			tapping-term-ms = <TAPPING_TERM_MS>;
+			bindings = <&kp>, <&kp>;
+		};
+		// Magic shift behavior:
+		// - Hold: Shift
+		// - Single Tap: Caps Lock Toggle
+		// - Double Tap: Caps Word
 		magic_shift: magic_shift {
 			compatible = "zmk,behavior-tap-dance";
 			#binding-cells = <0>;
 			tapping-term-ms = <TAPPING_TERM_MS>;
-			bindings = <&kp LSHFT>, <&caps_word>;
+			bindings = <&shift_caps LSHFT CAPS>, <&caps_word>;
 		};
 	};
 	keymap {
