@@ -51,7 +51,9 @@ tasks:
       - sh: which pipx
         msg: "pipx is not installed. Please install pipx from https://github.com/pypa/pipx"
     cmds:
-      - pipx run keymap-drawer parse --zmk-keymap {{.KEYMAP_FILE}} > keymap.yml && pipx run keymap-drawer draw keymap.yml -o {{.OUTPUT_SVG}} && rm keymap.yml
+      - pipx run --spec keymap-drawer keymap parse --zmk-keymap {{.KEYMAP_FILE}} > keymap.yml
+      - defer: rm -f keymap.yml
+      - pipx run --spec keymap-drawer keymap draw keymap.yml -o {{.OUTPUT_SVG}}
 
   build:
     desc: build both left and right firmware with Docker
