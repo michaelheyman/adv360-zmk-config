@@ -1,0 +1,57 @@
+# Configuration for keymap-drawer, used by `task build-keymap` to render
+# assets/keymap.svg from config/adv360.keymap.
+#
+# NOTE: raw_binding_map keys match the binding text AFTER the C preprocessor
+# runs, not the text in the keymap source. `&kp MAC_SLEEP` arrives here as
+# `&kp LC(LA(LG(S)))` and `&mmv MOVE_X(-MOVE_VAL)` as `&mmv MOVE_X(-1200)`.
+# To find the right key for a new entry, run the parse and read the output:
+#
+#   pipx run --spec keymap-drawer keymap parse --zmk-keymap config/adv360.keymap
+#
+# Layer references (&mo, &tog) are resolved from each layer's display-name
+# property, so they need no entries here.
+parse_config:
+  # Blank out transparent keys instead of filling every layer with ▽.
+  trans_legend: { t: "", type: trans }
+
+  raw_binding_map:
+    # Firmware and connectivity
+    "&bootloader": Boot
+    "&studio_unlock": Unlock
+    "&macro_ver": Version
+    "&stp STP_BAT": Battery
+    "&bt BT_SEL 0": BT 1
+    "&bt BT_SEL 1": BT 2
+    "&bt BT_SEL 2": BT 3
+    "&bt BT_SEL 3": BT 4
+    "&bt BT_SEL 4": BT 5
+    "&bt BT_CLR": BT Clear
+
+    # Lighting
+    "&bl BL_TOG": Backlight
+    "&bl BL_INC": Backlight +
+    "&bl BL_DEC": Backlight −
+    "&rgb_ug RGB_TOG": RGB
+
+    # Behaviors
+    "&magic_shift": { t: Shift, h: Caps Word }
+
+    # Mouse movement — bare defines on one row, MOVE_VAL-scaled on another
+    "&mmv MOVE_UP": Mouse ↑
+    "&mmv MOVE_DOWN": Mouse ↓
+    "&mmv MOVE_LEFT": Mouse ←
+    "&mmv MOVE_RIGHT": Mouse →
+    "&mmv MOVE_Y(-1200)": Mouse ↑
+    "&mmv MOVE_Y(1200)": Mouse ↓
+    "&mmv MOVE_X(-1200)": Mouse ←
+    "&mmv MOVE_X(1200)": Mouse →
+
+    # Mouse clicks
+    "&mkp LCLK": Left Click
+    "&mkp MCLK": Middle Click
+    "&mkp RCLK": Right Click
+
+    # Readable aliases (see the #defines at the top of the keymap)
+    "&kp LC(LA(LG(S)))": Sleep
+    "&kp LS(LC(TAB))": Next Tab
+    "&kp LC(TAB)": Prev Tab

@@ -47,13 +47,14 @@ tasks:
     desc: build keymap file
     vars:
       OUTPUT_SVG: assets/keymap.svg
+      DRAWER_CONFIG: keymap_drawer.config.yaml
     preconditions:
       - sh: which pipx
         msg: "pipx is not installed. Please install pipx from https://github.com/pypa/pipx"
     cmds:
-      - pipx run --spec keymap-drawer keymap parse --zmk-keymap {{.KEYMAP_FILE}} > keymap.yml
+      - pipx run --spec keymap-drawer keymap -c {{.DRAWER_CONFIG}} parse --zmk-keymap {{.KEYMAP_FILE}} > keymap.yml
       - defer: rm -f keymap.yml
-      - pipx run --spec keymap-drawer keymap draw keymap.yml -o {{.OUTPUT_SVG}}
+      - pipx run --spec keymap-drawer keymap -c {{.DRAWER_CONFIG}} draw keymap.yml -o {{.OUTPUT_SVG}}
 
   build:
     desc: build both left and right firmware with Docker
